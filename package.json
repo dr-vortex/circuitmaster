@@ -1,0 +1,38 @@
+{
+	"name": "circuitmaster",
+	"version": "0.0.0",
+	"description": "",
+	"author": {
+		"name": "Dr. Vortex",
+		"email": "jp@drvortex.dev"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dr-vortex/circuitmaster.git"
+	},
+	"type": "module",
+	"main": "src/index.ts",
+	"scripts": {
+		"format:check": "prettier --check src",
+		"format:fix": "prettier --write src",
+		"format": "npm run format:check && npm run format:fix",
+		"lint": "eslint src",
+		"build": "node scripts/build.js"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.5.0",
+		"@typescript-eslint/eslint-plugin": "^5.57.0",
+		"@typescript-eslint/parser": "^5.57.0",
+		"esbuild": "^0.17.14",
+		"eslint": "^8.36.0",
+		"jest": "^29.5.0",
+		"prettier": "^2.8.7",
+		"ts-jest": "^29.0.5",
+		"typescript": "^5.0.2"
+	},
+	"jest": {
+		"preset": "ts-jest",
+		"testEnvironment": "node"
+	}
+}
