@@ -42,7 +42,7 @@ export class Load<T extends LoadType = LoadType> implements LoadJSON {
 			voltage: this.voltage,
 			current: this.current,
 			resistance: this.resistance,
-		}
+		};
 	}
 
 	static FromJSON(json: LoadJSON, load: Load = new Load(LoadType.BASIC)): Load {
@@ -54,7 +54,6 @@ export class Load<T extends LoadType = LoadType> implements LoadJSON {
 }
 
 export function solveLoadUnknowns<T extends LoadType>(load: LoadJSON): Load<T> {
-
 	if (typeof load.current == 'number' && typeof load.resistance == 'number') {
 		load.voltage = load.current * load.resistance;
 	}

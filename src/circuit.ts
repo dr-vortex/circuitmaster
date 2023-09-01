@@ -83,7 +83,7 @@ export class Circuit<T extends CircuitType = CircuitType> extends Load<LoadType.
 	toJSON(): CircuitJSON {
 		return Object.assign(super.toJSON(), {
 			loads: this.loads.map(load => load.toJSON()),
-			circuitType: this.circuitType
+			circuitType: this.circuitType,
 		});
 	}
 
