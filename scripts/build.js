@@ -5,6 +5,7 @@ build({
 	outfile: 'dist/bundle.js',
 	format: 'esm',
 	bundle: true,
-	minify: true,
+	//minify: true,
 	sourcemap: true,
+	keepNames: true
 });

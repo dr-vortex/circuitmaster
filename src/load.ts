@@ -1,18 +1,15 @@
+import type { Circuit } from './circuit';
+
 export enum LoadType {
 	BASIC,
 	CIRCUIT,
 }
 
-export interface LoadJSON {
-	voltage?: number;
-	current?: number;
-	resistance?: number;
-}
-
-export class Load<T extends LoadType = LoadType> implements LoadJSON {
-	protected _voltage: number = 0;
-	protected _current: number = 0;
-	protected _resistance: number = 0;
+export class Load<T extends LoadType = LoadType> implements Load.JSON {
+	_circuit: Circuit;
+	protected _voltage = 0;
+	protected _current = 0;
+	protected _resistance = 0;
 	get voltage(): number {
 		return this._voltage;
 	}
@@ -37,7 +34,31 @@ export class Load<T extends LoadType = LoadType> implements LoadJSON {
 	}
 	constructor(protected _loadType: T) {}
 
-	toJSON(): LoadJSON {
+	solve(isSolvingCircuit = false): void {
+		if (!Number.isNaN(this._current) && !Number.isNaN(this._resistance)) {
+			this._voltage = this._current * this._resistance;
+		}
+
+		if (!Number.isNaN(this._voltage) && !Number.isNaN(this._resistance)) {
+			this._current = this._voltage / this._resistance;
+		}
+
+		if (!Number.isNaN(this._voltage) && !Number.isNaN(this._current)) {
+			this._resistance = this._voltage / this._current;
+		}
+
+		if (!isSolvingCircuit) {
+			this._circuit?.solve();
+		}
+	}
+
+	clear(): void {
+		this.voltage = NaN;
+		this.current = NaN;
+		this.resistance = NaN;
+	}
+
+	toJSON(): Load.JSON {
 		return {
 			voltage: this.voltage,
 			current: this.current,
@@ -45,26 +66,18 @@ export class Load<T extends LoadType = LoadType> implements LoadJSON {
 		};
 	}
 
-	static FromJSON(json: LoadJSON, load: Load = new Load(LoadType.BASIC)): Load {
-		load.voltage = json.voltage;
-		load.current = json.current;
-		load.resistance = json.resistance;
+	static FromJSON(json: Partial<Load.JSON>, load: Load = new Load(LoadType.BASIC)): Load {
+		load.voltage = json.voltage ?? NaN;
+		load.current = json.current ?? NaN;
+		load.resistance = json.resistance ?? NaN;
 		return load;
 	}
 }
 
-export function solveLoadUnknowns<T extends LoadType>(load: LoadJSON): Load<T> {
-	if (typeof load.current == 'number' && typeof load.resistance == 'number') {
-		load.voltage = load.current * load.resistance;
+export namespace Load {
+	export interface JSON {
+		voltage: number;
+		current: number;
+		resistance: number;
 	}
-
-	if (typeof load.voltage == 'number' && typeof load.resistance == 'number') {
-		load.current = load.voltage / load.resistance;
-	}
-
-	if (typeof load.voltage == 'number' && typeof load.current == 'number') {
-		load.resistance = load.voltage / load.current;
-	}
-
-	return load as Load<T>;
 }

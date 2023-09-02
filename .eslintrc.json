@@ -19,6 +19,7 @@
 		"no-fallthrough": "off",
 		"no-empty": "warn",
 		"no-case-declarations": "off",
-		"@typescript-eslint/no-unused-vars": "warn"
+		"@typescript-eslint/no-unused-vars": "warn",
+		"@typescript-eslint/no-namespace": "off"
 	}
 }
