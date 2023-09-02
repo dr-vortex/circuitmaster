@@ -85,7 +85,6 @@ export class Circuit<T extends CircuitType = CircuitType> extends Load<LoadType.
 		for (const load of this.loads) {
 			if (this.circuitType == CircuitType.SERIES) {
 				if (Number.isNaN(this._current)) {
-					alert(this._current + ' -> ' + load.current);
 					this._current = load.current;
 				}
 				load.current = this._current;
