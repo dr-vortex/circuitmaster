@@ -24,7 +24,7 @@ export class LoadUI extends UIComponent<Load> {
 	update() {
 		for (const attr of ['voltage', 'current', 'resistance']) {
 			const value = Number.isNaN(this.target[attr]) ? '' : this.target[attr].toString();
-			$(this).find(`>.${attr} input`).val(value).attr('size', 1);
+			$(this).find(`>.${attr} input`).val(value).attr('size', value.length + 1);
 		}
 	}
 }

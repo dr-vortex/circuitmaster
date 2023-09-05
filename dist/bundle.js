@@ -6702,7 +6702,7 @@ var LoadUI = class extends UIComponent {
   update() {
     for (const attr of ["voltage", "current", "resistance"]) {
       const value = Number.isNaN(this.target[attr]) ? "" : this.target[attr].toString();
-      (0, import_jquery2.default)(this).find(`>.${attr} input`).val(value).attr("size", 1);
+      (0, import_jquery2.default)(this).find(`>.${attr} input`).val(value).attr("size", value.length + 1);
     }
   }
 };
