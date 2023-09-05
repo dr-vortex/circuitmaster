@@ -16,12 +16,15 @@
 
 <body>
 	<script type="module">
-		import { Circuit, CircuitType } from './bundle.js';
+		import { Circuit, CircuitType, UI } from './bundle.js';
 		const circuit = Circuit.FromJSON({
 			circuitType: CircuitType.SERIES,
 			loads: [{}, {}, {}, {}, {}]
-		})
+		});
+		const ui = new UI.CircuitUI(circuit);
+		document.body.append(ui);
 		circuit.solve();
+		
 	</script>
 </body>
 
