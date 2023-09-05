@@ -29,7 +29,7 @@ export class CircuitUI extends LoadUI {
 			.on('change', e => {
 				const selected = ($(e.target as HTMLSelectElement).val() as string) ?? '0';
 				const type = parseInt(selected);
-				switch(type) {
+				switch (type) {
 					case LoadType.BASIC:
 						const newLoad: Load = new Load(LoadType.BASIC);
 						target.loads.push(newLoad);
@@ -42,7 +42,7 @@ export class CircuitUI extends LoadUI {
 				this.update();
 			})
 			.appendTo(this);
-		for(const [key, value] of Object.entries(LoadType)) {
+		for (const [key, value] of Object.entries(LoadType)) {
 			if (key == (+key).toString()) {
 				continue;
 			}
