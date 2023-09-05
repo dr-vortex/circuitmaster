@@ -6715,7 +6715,7 @@ var CircuitUI = class extends LoadUI {
   constructor(target) {
     super(target);
     this.target = target;
-    const select = (0, import_jquery3.default)("<select></select>").addClass("circuitType").on("change", (e) => {
+    const typeSelect = (0, import_jquery3.default)("<select></select>").addClass("circuitType").on("change", (e) => {
       const selected = (0, import_jquery3.default)(e.target).val() ?? "0";
       target.circuitType = parseInt(selected);
       this.update();
@@ -6724,10 +6724,32 @@ var CircuitUI = class extends LoadUI {
       if (key == (+key).toString()) {
         continue;
       }
-      (0, import_jquery3.default)("<option></option>").attr({ value }).text(key.toLowerCase()).appendTo(select);
+      (0, import_jquery3.default)("<option></option>").attr({ value }).text(key.toLowerCase()).appendTo(typeSelect);
     }
     const loads = (0, import_jquery3.default)("<div></div>").addClass("loads").appendTo(this);
     (0, import_jquery3.default)("<p></p>").text("Loads:").appendTo(loads);
+    (0, import_jquery3.default)("<p></p>").text("Add:").appendTo(this);
+    const addSelect = (0, import_jquery3.default)("<select></select>").addClass("add").on("change", (e) => {
+      const selected = (0, import_jquery3.default)(e.target).val() ?? "0";
+      const type = parseInt(selected);
+      switch (type) {
+        case 0 /* BASIC */:
+          const newLoad = new Load(0 /* BASIC */);
+          target.loads.push(newLoad);
+        case 1 /* CIRCUIT */:
+          const newCircuit = new Circuit(0 /* NONE */);
+          target.loads.push(newCircuit);
+        default:
+          alert("Not supported");
+      }
+      this.update();
+    }).appendTo(this);
+    for (const [key, value] of Object.entries(LoadType)) {
+      if (key == (+key).toString()) {
+        continue;
+      }
+      (0, import_jquery3.default)("<option></option>").attr({ value }).text(key.toLowerCase()).appendTo(addSelect);
+    }
     this.update();
   }
   update() {

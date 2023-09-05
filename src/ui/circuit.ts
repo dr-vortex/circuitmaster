@@ -1,11 +1,12 @@
 import $ from 'jquery';
 import { Circuit, CircuitType } from '../circuit';
 import { LoadUI } from './load';
+import { Load, LoadType } from '../load';
 
 export class CircuitUI extends LoadUI {
 	constructor(public target: Circuit) {
 		super(target);
-		const select = $('<select></select>')
+		const typeSelect = $('<select></select>')
 			.addClass('circuitType')
 			.on('change', e => {
 				const selected = ($(e.target as HTMLSelectElement).val() as string) ?? '0';
@@ -18,10 +19,36 @@ export class CircuitUI extends LoadUI {
 				continue;
 			}
 
-			$('<option></option>').attr({ value }).text(key.toLowerCase()).appendTo(select);
+			$('<option></option>').attr({ value }).text(key.toLowerCase()).appendTo(typeSelect);
 		}
 		const loads = $('<div></div>').addClass('loads').appendTo(this);
 		$('<p></p>').text('Loads:').appendTo(loads);
+		$('<p></p>').text('Add:').appendTo(this);
+		const addSelect = $('<select></select>')
+			.addClass('add')
+			.on('change', e => {
+				const selected = ($(e.target as HTMLSelectElement).val() as string) ?? '0';
+				const type = parseInt(selected);
+				switch(type) {
+					case LoadType.BASIC:
+						const newLoad: Load = new Load(LoadType.BASIC);
+						target.loads.push(newLoad);
+					case LoadType.CIRCUIT:
+						const newCircuit = new Circuit(CircuitType.NONE);
+						target.loads.push(newCircuit);
+					default:
+						alert('Not supported');
+				}
+				this.update();
+			})
+			.appendTo(this);
+		for(const [key, value] of Object.entries(LoadType)) {
+			if (key == (+key).toString()) {
+				continue;
+			}
+
+			$('<option></option>').attr({ value }).text(key.toLowerCase()).appendTo(addSelect);
+		}
 		this.update();
 	}
 
