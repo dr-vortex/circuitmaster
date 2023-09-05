@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CircuitMaster</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			background-color: #444;
+			color: #ccc;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="module">
+		import { Circuit, CircuitType } from '../dist/bundle.js';
+		const circuit = Circuit.FromJSON({
+			circuitType: CircuitType.SERIES,
+			loads: [{}, {}, {}, {}, {}]
+		})
+		circuit.solve();
+		alert(circuit.loads.map(l => JSON.stringify(l)).join('\n'));
+	</script>
+</body>
+
+</html>
