@@ -65,7 +65,7 @@ export class CircuitUI extends LoadUI {
 		const loadUIs = [...$(this).find<LoadUI>('.loads>.LoadUI')];
 		for (const load of this.target.loads) {
 			if (!loadUIs.some(ui => ui.target === load)) {
-				const ui = new LoadUI(load);
+				const ui = load.loadType == LoadType.CIRCUIT ? new CircuitUI(load as Circuit) : new LoadUI(load);
 				$(this).find('.loads').append(ui);
 				loadUIs.push(ui);
 			}

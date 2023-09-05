@@ -6763,7 +6763,7 @@ var CircuitUI = class extends LoadUI {
     const loadUIs = [...(0, import_jquery3.default)(this).find(".loads>.LoadUI")];
     for (const load of this.target.loads) {
       if (!loadUIs.some((ui) => ui.target === load)) {
-        const ui = new LoadUI(load);
+        const ui = load.loadType == 1 /* CIRCUIT */ ? new CircuitUI(load) : new LoadUI(load);
         (0, import_jquery3.default)(this).find(".loads").append(ui);
         loadUIs.push(ui);
       }
